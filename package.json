@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "doc": "typedoc"
+    "coverage": "nyc npm test && nyc report --reporter=lcov",
+    "doc": "typedoc",
+    "start": "tsc-watch --onSuccess \"node dist/basicFunction.ts\""
   },
   "keywords": [],
   "author": "Aitor Alonso Melián",
@@ -15,7 +17,10 @@
     "@types/mocha": "^8.2.2",
     "chai": "^4.3.4",
     "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
     "ts-node": "^9.1.1",
-    "typedoc": "^0.20.35"
+    "tsc-watch": "^4.2.9",
+    "typedoc": "^0.20.35",
+    "typescript": "^4.2.4"
   }
 }
