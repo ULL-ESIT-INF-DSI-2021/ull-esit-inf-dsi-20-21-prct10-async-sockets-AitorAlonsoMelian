@@ -4,6 +4,9 @@ import {RequestType, ResponseType} from '../types';
 
 const gestor = new noteGestor()
 
+/**
+ * Servidor que escucha en el puerto 60300, y se encarga de gestionar los comandos recibidos y llama a noteGestor, que es el que gestiona el sistema de ficheros. También manda la respuesta al cliente.
+ */
 const server = net.createServer({allowHalfOpen: true}, (connection) => {
 
     let wholeData: string = ''
