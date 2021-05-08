@@ -17,7 +17,7 @@ export class noteGestor {
      * @param color Color de la nota
      * @returns Retorna 1 si la creación de la nota ha sido exitosa
      */
-    addNote(user: string, title: string, body: string, color: string): string | Error{
+    addNote(user: string, title: string, body: string, color: string): string{
         let path: string = "Notas/" + user + "/" + title + ".json"
         let content: object = { "body": body, "color": color }
 
@@ -31,7 +31,7 @@ export class noteGestor {
             return chalk.bgGreen("El archivo ha sido creado con éxito")
         }
         else { // Si el archivo ya existe se da un mensaje de error
-            return new Error(chalk.bgRed.white("El archivo que intenta añadir ya existe"))
+            return chalk.bgRed.white("El archivo que intenta añadir ya existe")
         }
 
     }
@@ -42,7 +42,7 @@ export class noteGestor {
      * @param title Titulo de la nota a borrar
      * @returns Retorna 1 si la nota se ha borrado correctamente.
      */
-    deleteNote(user: string, title: string): number{
+    deleteNote(user: string, title: string): string {
         let path: string = "Notas/" + user + "/" + title + ".json"
         let dirPath: string = "Notas/" + user
         if (fs.existsSync(path)) {
@@ -51,11 +51,10 @@ export class noteGestor {
             if (notesList.length == 0) {
                 fs.rmdirSync(dirPath)
             }
-            console.log(chalk.bgGreen("El archivo ha sido borrado con éxito"))
-            return 1
+            return chalk.bgGreen("El archivo ha sido borrado con éxito")
         }
         else {
-            throw new Error(chalk.bgRed.white("El archivo que desea borrar no existe"))
+            return chalk.bgRed.white("El archivo que desea borrar no existe")
         }
     }
 
@@ -67,16 +66,15 @@ export class noteGestor {
      * @param color Color de la nota
      * @returns Retorna 1 si se ha modificado correctamente la nota.
      */
-    modifyNote(user: string, title: string, body: string, color: string){
+    modifyNote(user: string, title: string, body: string, color: string): string{
         let path: string = "Notas/" + user + "/" + title + ".json"
         let content: object = { "body": body, "color": color }
         if (fs.existsSync(path)){
             fs.writeFileSync(path,JSON.stringify(content))
-            console.log(chalk.bgGreen("El archivo ha sido modificado con éxito"))
-            return 1
+            return chalk.bgGreen("El archivo ha sido modificado con éxito")
         }
         else {
-            throw new Error(chalk.bgRed.white("El archivo que desea modificar no existe"))
+            return chalk.bgRed.white("El archivo que desea modificar no existe")
         }
     }
     
@@ -85,28 +83,29 @@ export class noteGestor {
      * @param user Usuario del que se listan las notas
      * @returns Retorna 1 si se listan correctamente
      */
-    listNotes(user: string){
+    listNotes(user: string): string{
         let dirPath: string = "Notas/" + user
         let notesList = fs.readdirSync(dirPath)
+        let response: string = ''
         notesList.forEach(element => {
             let path = dirPath + "/" + element
             let color: string = JSON.parse(fs.readFileSync(path, 'utf-8'))["color"]
             switch(color) {
                 case "blue":
-                    console.log(chalk.blue(element))
+                    response = response + chalk.blue(element) + '\n'
                     break
                 case "green":
-                    console.log(chalk.green(element))
+                    response = response + chalk.green(element) + '\n'
                     break
                 case "yellow":
-                    console.log(chalk.yellow(element))
+                    response = response + chalk.yellow(element) + '\n'
                     break
                 case "red":
-                    console.log(chalk.red(element))
+                    response = response + chalk.red(element) + '\n'
                     break
             }
         });
-        return 1
+        return response
     }
 
     /**
@@ -115,7 +114,7 @@ export class noteGestor {
      * @param title Titulo de la nota
      * @returns Retorna 1 si se puede leer la nota correctamente
      */
-    readNote(user: string, title: string){
+    readNote(user: string, title: string): string{
         let path: string = "Notas/" + user + "/" + title + ".json"
         let content: string = fs.readFileSync(path,'utf-8')
         content = JSON.parse(content)
@@ -123,21 +122,22 @@ export class noteGestor {
         let body: string = content["body"]
         let color: string = content["color"]
 
+        let response: string = ''
         switch(color) {
             case "green": 
-                console.log(chalk.green(body))
+                response += chalk.green(body)
                 break
             case "red":
-                console.log(chalk.red(body))
+                response += chalk.red(body)
                 break
             case "blue":
-                console.log(chalk.blue(body))
+                response += chalk.blue(body)
                 break
             case "yellow":
-                console.log(chalk.yellow(body))
+                response += chalk.yellow(body)
                 break
         }
-        return 1
+        return response
     }
 
     

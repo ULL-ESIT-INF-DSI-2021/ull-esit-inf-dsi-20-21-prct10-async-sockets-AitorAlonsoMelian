@@ -10,24 +10,29 @@ const server = net.createServer({ allowHalfOpen: true }, (connection) => {
     });
     connection.on('end', () => {
         const object = JSON.parse(wholeData);
+        let result;
         console.log(object);
         switch (object.command) {
             case 'add':
-                gestor.addNote(object.user, object.title, object.body, object.color);
+                result = gestor.addNote(object.user, object.title, object.body, object.color);
                 break;
             case 'read':
-                gestor.readNote(object.user, object.title);
+                result = gestor.readNote(object.user, object.title);
                 break;
             case 'delete':
-                gestor.deleteNote(object.user, object.title);
+                result = gestor.deleteNote(object.user, object.title);
                 break;
             case 'list':
-                gestor.listNotes(object.user);
+                result = gestor.listNotes(object.user);
                 break;
             case 'modify':
-                gestor.modifyNote(object.user, object.title, object.body, object.color);
+                result = gestor.modifyNote(object.user, object.title, object.body, object.color);
                 break;
         }
+        let response = { output: result };
+        connection.write(JSON.stringify(response), () => {
+            connection.end();
+        });
     });
 }).listen(60300, () => {
     console.log('Waiting...');

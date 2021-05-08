@@ -9,5 +9,13 @@ function send(command, user, title, body, color) {
             client.end();
         });
     });
+    let wholeResponse = '';
+    client.on('data', (data) => {
+        wholeResponse += data.toString();
+    });
+    client.on('end', () => {
+        const response = JSON.parse(wholeResponse);
+        console.log(response.output);
+    });
 }
 exports.send = send;

@@ -32,7 +32,6 @@ yargs.command({
     },
     handler(argv) {
         if (typeof argv.user === 'string' && typeof argv.title === 'string' && typeof argv.body === 'string' && typeof argv.color === 'string' && typeof argv._[0] === 'string') {
-            //note.addNote(argv.user, argv.title, argv.body, argv.color)
             client_1.send(argv._[0], argv.user, argv.title, argv.body, argv.color);
         }
     },
@@ -53,8 +52,8 @@ yargs.command({
         }
     },
     handler(argv) {
-        if (typeof argv.user === 'string' && typeof argv.title === 'string') {
-            //note.readNote(argv.user, argv.title)
+        if (typeof argv.user === 'string' && typeof argv.title === 'string' && typeof argv._[0] === 'string') {
+            client_1.send(argv._[0], argv.user, argv.title, '', '');
         }
     }
 });
@@ -74,8 +73,8 @@ yargs.command({
         }
     },
     handler(argv) {
-        if (typeof argv.user === 'string' && typeof argv.title === 'string') {
-            //note.deleteNote(argv.user, argv.title)
+        if (typeof argv.user === 'string' && typeof argv.title === 'string' && typeof argv._[0] === 'string') {
+            client_1.send(argv._[0], argv.user, argv.title, '', '');
         }
     }
 });
@@ -90,8 +89,8 @@ yargs.command({
         }
     },
     handler(argv) {
-        if (typeof argv.user === 'string') {
-            //note.listNotes(argv.user)
+        if (typeof argv.user === 'string' && typeof argv._[0] === 'string') {
+            client_1.send(argv._[0], argv.user, '', '', '');
         }
     }
 });
@@ -121,8 +120,8 @@ yargs.command({
         }
     },
     handler(argv) {
-        if (typeof argv.user === 'string' && typeof argv.title === 'string' && typeof argv.body === 'string' && typeof argv.color === 'string') {
-            //note.modifyNote(argv.user, argv.title, argv.body, argv.color)
+        if (typeof argv.user === 'string' && typeof argv.title === 'string' && typeof argv.body === 'string' && typeof argv.color === 'string' && typeof argv._[0] === 'string') {
+            client_1.send(argv._[0], argv.user, argv.title, argv.body, argv.color);
         }
     }
 });

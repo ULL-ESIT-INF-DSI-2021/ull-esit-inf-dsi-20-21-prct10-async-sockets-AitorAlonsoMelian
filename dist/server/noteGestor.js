@@ -26,11 +26,10 @@ class noteGestor {
                 fs.mkdirSync("Notas/" + user);
             }
             fs.writeFileSync(path, JSON.stringify(content));
-            console.log(chalk.bgGreen("El archivo ha sido creado con éxito"));
-            return 1;
+            return chalk.bgGreen("El archivo ha sido creado con éxito");
         }
         else { // Si el archivo ya existe se da un mensaje de error
-            throw new Error(chalk.bgRed.white("El archivo que intenta añadir ya existe"));
+            return chalk.bgRed.white("El archivo que intenta añadir ya existe");
         }
     }
     /**
@@ -48,11 +47,10 @@ class noteGestor {
             if (notesList.length == 0) {
                 fs.rmdirSync(dirPath);
             }
-            console.log(chalk.bgGreen("El archivo ha sido borrado con éxito"));
-            return 1;
+            return chalk.bgGreen("El archivo ha sido borrado con éxito");
         }
         else {
-            throw new Error(chalk.bgRed.white("El archivo que desea borrar no existe"));
+            return chalk.bgRed.white("El archivo que desea borrar no existe");
         }
     }
     /**
@@ -68,11 +66,10 @@ class noteGestor {
         let content = { "body": body, "color": color };
         if (fs.existsSync(path)) {
             fs.writeFileSync(path, JSON.stringify(content));
-            console.log(chalk.bgGreen("El archivo ha sido modificado con éxito"));
-            return 1;
+            return chalk.bgGreen("El archivo ha sido modificado con éxito");
         }
         else {
-            throw new Error(chalk.bgRed.white("El archivo que desea modificar no existe"));
+            return chalk.bgRed.white("El archivo que desea modificar no existe");
         }
     }
     /**
@@ -83,25 +80,26 @@ class noteGestor {
     listNotes(user) {
         let dirPath = "Notas/" + user;
         let notesList = fs.readdirSync(dirPath);
+        let response = '';
         notesList.forEach(element => {
             let path = dirPath + "/" + element;
             let color = JSON.parse(fs.readFileSync(path, 'utf-8'))["color"];
             switch (color) {
                 case "blue":
-                    console.log(chalk.blue(element));
+                    response = response + chalk.blue(element) + '\n';
                     break;
                 case "green":
-                    console.log(chalk.green(element));
+                    response = response + chalk.green(element) + '\n';
                     break;
                 case "yellow":
-                    console.log(chalk.yellow(element));
+                    response = response + chalk.yellow(element) + '\n';
                     break;
                 case "red":
-                    console.log(chalk.red(element));
+                    response = response + chalk.red(element) + '\n';
                     break;
             }
         });
-        return 1;
+        return response;
     }
     /**
      * Método que imprime por pantalla la nota title del usuario user.
@@ -115,21 +113,22 @@ class noteGestor {
         content = JSON.parse(content);
         let body = content["body"];
         let color = content["color"];
+        let response = '';
         switch (color) {
             case "green":
-                console.log(chalk.green(body));
+                response += chalk.green(body);
                 break;
             case "red":
-                console.log(chalk.red(body));
+                response += chalk.red(body);
                 break;
             case "blue":
-                console.log(chalk.blue(body));
+                response += chalk.blue(body);
                 break;
             case "yellow":
-                console.log(chalk.yellow(body));
+                response += chalk.yellow(body);
                 break;
         }
-        return 1;
+        return response;
     }
 }
 exports.noteGestor = noteGestor;

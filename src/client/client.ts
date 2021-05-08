@@ -8,5 +8,14 @@ export function send(command: string, user: string, title: string, body: string,
             client.end()
         })
     })
+    let wholeResponse: string = ''
+    client.on('data', (data) => {
+        wholeResponse += data.toString()
+    })
+
+    client.on('end', () => {
+        const response = JSON.parse(wholeResponse)
+        console.log(response.output)
+    })
 
 }
