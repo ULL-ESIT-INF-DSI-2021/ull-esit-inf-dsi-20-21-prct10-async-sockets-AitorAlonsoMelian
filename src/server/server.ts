@@ -1,17 +1,18 @@
 import * as net from 'net'
 import {noteGestor} from './noteGestor'
+import {RequestType, ResponseType} from '../types';
 
 const gestor = new noteGestor()
 
 const server = net.createServer({allowHalfOpen: true}, (connection) => {
 
-    let wholeData = ''
+    let wholeData: string = ''
     connection.on('data', (data) => {
         wholeData = wholeData + data.toString()
     })
 
     connection.on('end', () => {
-        const object = JSON.parse(wholeData)
+        const object: RequestType = JSON.parse(wholeData)
         let result: string
         console.log(object)
         switch(object.command){
@@ -31,15 +32,11 @@ const server = net.createServer({allowHalfOpen: true}, (connection) => {
                 result = gestor.modifyNote(object.user, object.title, object.body, object.color)
                 break;
         }
-            let response = {output: result}
+            let response: ResponseType = {output: result}
             connection.write(JSON.stringify(response), () => {
                 connection.end()
             })
-
-        
     })
-
-
 }).listen(60300, () => {
     console.log('Waiting...')
 })
