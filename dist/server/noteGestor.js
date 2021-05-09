@@ -15,7 +15,7 @@ class noteGestor {
      * @param title Titulo de la nota
      * @param body Contenido de la nota
      * @param color Color de la nota
-     * @returns Retorna 1 si la creación de la nota ha sido exitosa
+     * @returns Retorna la cadena que indica el resultado de la operación
      */
     addNote(user, title, body, color) {
         let path = "Notas/" + user + "/" + title + ".json";
@@ -36,7 +36,7 @@ class noteGestor {
      * Método que borra una nota del usuario y título que se le haya pasado por parámetro.
      * @param user Usuario del que se quiere borrar la nota
      * @param title Titulo de la nota a borrar
-     * @returns Retorna 1 si la nota se ha borrado correctamente.
+     * @returns Retorna la cadena que indica el resultado de la operación
      */
     deleteNote(user, title) {
         let path = "Notas/" + user + "/" + title + ".json";
@@ -59,7 +59,7 @@ class noteGestor {
      * @param title Titulo de la nota
      * @param body Contenido de la nota
      * @param color Color de la nota
-     * @returns Retorna 1 si se ha modificado correctamente la nota.
+     * @returns Retorna la cadena que indica el resultado de la operación
      */
     modifyNote(user, title, body, color) {
         let path = "Notas/" + user + "/" + title + ".json";
@@ -75,7 +75,7 @@ class noteGestor {
     /**
      * Método que lista todas las notas del usuario user
      * @param user Usuario del que se listan las notas
-     * @returns Retorna 1 si se listan correctamente
+     * @returns Retorna la lista de todas las notas del usuario user
      */
     listNotes(user) {
         let dirPath = "Notas/" + user;
@@ -102,10 +102,10 @@ class noteGestor {
         return response;
     }
     /**
-     * Método que imprime por pantalla la nota title del usuario user.
+     * Método que devuelve la nota title del usuario user.
      * @param user Usuario de que se lee la nota
      * @param title Titulo de la nota
-     * @returns Retorna 1 si se puede leer la nota correctamente
+     * @returns Retorna el contenido de la nota en el color adecuado
      */
     readNote(user, title) {
         let path = "Notas/" + user + "/" + title + ".json";

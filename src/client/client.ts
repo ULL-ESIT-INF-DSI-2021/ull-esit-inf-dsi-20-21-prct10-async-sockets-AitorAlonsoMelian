@@ -1,4 +1,5 @@
 import * as net from 'net'
+import { EventEmitterClass } from '../EventEmitterClass';
 import {RequestType, ResponseType} from '../types';
 
 /**
@@ -10,20 +11,14 @@ import {RequestType, ResponseType} from '../types';
  * @param color Color de la nota
  */
 export function send(command: string, user: string, title: string, body: string, color: string) {
-    const client = net.connect({port: 60300}, () => {
-        const object: RequestType = {command: command, user: user, title: title, body: body, color: color}
-        client.write(JSON.stringify(object), () => {
-            client.end()
-        })
-    })
-    let wholeResponse: string = ''
-    client.on('data', (data) => {
-        wholeResponse += data.toString()
+    const socket = net.connect({port: 60300});
+    const client = new EventEmitterClass(socket)
+    const object: RequestType = {command: command, user: user, title: title, body: body, color: color}
+    socket.write(JSON.stringify(object), () => {
+        socket.end()
     })
 
-    client.on('end', () => {
-        const response: ResponseType = JSON.parse(wholeResponse)
+    client.on('message', (response) => {
         console.log(response.output)
     })
-
 }

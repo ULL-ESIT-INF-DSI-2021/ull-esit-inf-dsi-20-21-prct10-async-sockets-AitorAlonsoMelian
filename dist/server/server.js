@@ -3,6 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const net = require("net");
 const noteGestor_1 = require("./noteGestor");
 const gestor = new noteGestor_1.noteGestor();
+/**
+ * Servidor que escucha en el puerto 60300, y se encarga de gestionar los comandos recibidos y llama a noteGestor, que es el que gestiona el sistema de ficheros. También manda la respuesta al cliente.
+ */
 const server = net.createServer({ allowHalfOpen: true }, (connection) => {
     let wholeData = '';
     connection.on('data', (data) => {
