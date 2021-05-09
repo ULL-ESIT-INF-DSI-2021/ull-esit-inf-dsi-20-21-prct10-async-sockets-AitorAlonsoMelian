@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ClassEventEmitter = void 0;
+exports.EventEmitterClass = void 0;
 const events_1 = require("events");
-class ClassEventEmitter extends events_1.EventEmitter {
+class EventEmitterClass extends events_1.EventEmitter {
     constructor(connection) {
         super();
         let data = '';
@@ -15,4 +15,4 @@ class ClassEventEmitter extends events_1.EventEmitter {
         });
     }
 }
-exports.ClassEventEmitter = ClassEventEmitter;
+exports.EventEmitterClass = EventEmitterClass;

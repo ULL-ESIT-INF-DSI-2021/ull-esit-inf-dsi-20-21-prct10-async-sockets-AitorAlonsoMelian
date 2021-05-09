@@ -1,5 +1,5 @@
 /// <reference types="node" />
 import { EventEmitter } from 'events';
-export declare class ClassEventEmitter extends EventEmitter {
+export declare class EventEmitterClass extends EventEmitter {
     constructor(connection: EventEmitter);
 }

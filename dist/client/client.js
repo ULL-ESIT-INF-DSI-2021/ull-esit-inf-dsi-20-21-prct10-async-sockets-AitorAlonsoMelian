@@ -13,7 +13,7 @@ const EventEmitterClass_1 = require("../EventEmitterClass");
  */
 function send(command, user, title, body, color) {
     const socket = net.connect({ port: 60300 });
-    const client = new EventEmitterClass_1.ClassEventEmitter(socket);
+    const client = new EventEmitterClass_1.EventEmitterClass(socket);
     const object = { command: command, user: user, title: title, body: body, color: color };
     socket.write(JSON.stringify(object), () => {
         socket.end();
